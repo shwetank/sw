@@ -19,7 +19,7 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('fetch', function(event) {
 	event.respondWith(
-		caches.open('mysite-dynamic').then(function(cache) {
+		caches.open('mysite-static-v4').then(function(cache) {
 			return fetch(event.request.clone()).then(function(response) {
 				cache.put(event.request, response.clone());
 				return response;
