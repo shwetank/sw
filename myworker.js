@@ -28,6 +28,20 @@ self.addEventListener('fetch', function(event) {
 	);
 });
 
+
+caches.match(url)
+.then(function (response){
+	if (!response) throw Error('No Data');
+	return response.json();
+}).then(function(data){
+	if (!isOnline) {
+		updatePage(data);
+	}
+}).catch(function() {
+	// we didn't get cached data, the network is our last hope:
+	return createCall;
+});
+
 /*self.addEventListener('fetch', function(event) {
 	event.respondWith(
 		caches.match(event.request)
