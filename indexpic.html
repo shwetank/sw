@@ -10,6 +10,7 @@
 <script>
 var api_key = "990314f7c76af511ea37d8641b0a0197";
 var container = document.querySelector("#container");
+var isOnline = false;
 
 function createCall() {
   /*Issue 452449 affects the fetch() API messages in the console in Chrome.*/
@@ -28,14 +29,27 @@ function handleResponse(response) {
 }
 
 function handleJSON(json) {
+  isOnline = true;
   console.log(json);
   var photos = json.photos.photo;
+  updatePage(photos);
+}
 
-  /*forEach(function(entry){
-    container.innerHTML +="<p>"+entry.title+"</p>";
-  });*/
+caches.match(url)
+.then(function (response){
+  if (!response) throw Error('No Data');
+  return response.json();
+}).then(function(data){
+  if (!isOnline) {
+    updatePage(data);
+  }
+}).catch(function() {
+  // we didn't get cached data, the network is our last hope:
+  return createCall;
+});
+
+function updatePage(photos) {
   for (var i=0; i < photos.length; i++){
-    //container.innerHTML +="<p>"+photos[i].title+"</p>";
     var id = photos[i].id;
     var farmId = photos[i].farm;
     var secret = photos[i].secret;
@@ -43,7 +57,6 @@ function handleJSON(json) {
     var url = "https://farm"+farmId+".staticflickr.com/"+serverId+"//"+id+"_"+secret+".jpg";
     container.innerHTML +="<p>"+photos[i].title+"</p><img src="+url+" />";
   }
-
 }
 
 createCall();
