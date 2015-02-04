@@ -1,0 +1,104 @@
+<html>
+
+  <head>
+    <link rel="stylesheet" href="css/cssreset.css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <title>Hackernews that works offline!</title>
+    <style>
+      @font-face {
+        font-family: 'volkswagen-serialbold';
+        src: url('fonts/volkswagen-serial-bold-webfont.eot');
+        src: url('fonts/volkswagen-serial-bold-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/volkswagen-serial-bold-webfont.woff2') format('woff2'), url('fonts/volkswagen-serial-bold-webfont.woff') format('woff'), url('fonts/volkswagen-serial-bold-webfont.ttf') format('truetype'), url('fonts/volkswagen-serial-bold-webfont.svg#volkswagen-serialbold') format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+      body {
+        font-family: 'Raleway', sans-serif;
+      }
+      header > h1 {
+        font-size: 2.0em;
+        font-family: 'volkswagen-serialbold';
+      }
+      .left-nav {
+        float: left;
+        width: 30%;
+      }
+      .right-wrapper {
+        float: right;
+        width: 65%;
+        min-height: 70%;
+      }
+      .content {
+        height: 40%;
+        /* or any value */
+
+        overflow-y: auto;
+      }
+      .comments {
+        height: 40%;
+        /* or any value */
+
+        overflow-y: auto;
+      }
+      footer {
+        clear: both;
+      }
+      main {
+        margin: 1.5%;
+      }
+      .comment-username {
+        font-weight: bold;
+        display: block;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="main-container">
+      <header>
+        <h1>Offline Reddit</h1>
+      </header>
+      <main>
+        <nav class="left-nav">
+          <ul class="headline-list">
+            <!--  <li class="headline">
+        <div class="story">
+          <div class="title">Windows 10 for Raspberry Pi 2</div>
+          <div class="details">by <a href="" class="reddituser">username</a> to <a href="" class="">/r/batman</a></div>
+        </div>
+      </li>
+
+      <li class="headline">Authentication Cheat Sheet</li>
+      <li class="headline">Why people were enthused about GCC early on in its life</li>
+      <li class="headline">Single-Tag Website</li>-->
+          </ul>
+        </nav>
+        <!--<section class="middle-list"></section>-->
+        <div class="right-wrapper">
+          <section class="content">
+            <p>This playSound() function could be called every time somebody presses a key or clicks something with the mouse.</p>
+
+            <p>The start(time) function makes it easy to schedule precise sound playback for games and other time-critical applications. However, to get this scheduling working properly, ensure that your sound buffers are pre-loaded. (On older systems, you
+              may need to call noteOn(time) instead of start(time).)</p>
+
+            <p>An important point to note is that on iOS, Apple currently mutes all sound output until the first time a sound is played during a user interaction event - for example, calling playSound() inside a touch event handler. You may struggle with
+              Web Audio on iOS "not working" unless you circumvent this - in order to avoid problems like this, just play a sound (it can even be muted by connecting to a Gain Node with zero gain) inside an early UI event - e.g. "touch here to play".</p>
+          </section>
+
+          <section class="comments">
+            <ul class="comments-list">
+              <li>
+                <span class="comment-username">someusername</span> Mr. J's mouth looks entirely too large here. Still a neat picture all the same.</li>
+            </ul>
+          </section>
+        </div>
+      </main>
+      <footer>
+        <p>&copy; 2015 Shwetank Dixit. MIT License.</p>
+      </footer>
+    </div>
+    <script src="scripts/second.js"></script>
+  </body>
+
+</html>

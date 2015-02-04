@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shwetank's Web experiments</title>
+</head>
+<body>
+<p>Just some sample text here.</p>
+<div id="container"></div>
+<script type="text/javascript" src="mysw.js"></script>
+<script>
+var api_key = "990314f7c76af511ea37d8641b0a0197";
+var container = document.querySelector("#container");
+
+function createCall() {
+  /*Issue 452449 affects the fetch() API messages in the console in Chrome.*/
+
+  var url = "https://api.flickr.com/services/rest/?format=json&per_page=10&nojsoncallback=1&method=flickr.photos.search&content_type=1&tags=india&api_key="+api_key;
+  fetch(url)
+    .then(handleResponse)
+    .then(handleJSON)
+    .catch();
+}
+
+function handleResponse(response) {
+  if (response.status === 200 || response.status === 0) {
+    return response.json();
+  }
+}
+
+function handleJSON(json) {
+  console.log(json);
+  var photos = json.photos.photo;
+
+  /*forEach(function(entry){
+    container.innerHTML +="<p>"+entry.title+"</p>";
+  });*/
+  for (var i=0; i < photos.length; i++){
+    //container.innerHTML +="<p>"+photos[i].title+"</p>";
+    var id = photos[i].id;
+    var farmId = photos[i].farm;
+    var secret = photos[i].secret;
+    var serverId = photos[i].server;
+    var url = "https://farm"+farmId+".staticflickr.com/"+serverId+"//"+id+"_"+secret+".jpg";
+    container.innerHTML +="<p>"+photos[i].title+"</p><img src="+url+" />";
+  }
+
+}
+
+createCall();
+</script>
+</body>
+</html>

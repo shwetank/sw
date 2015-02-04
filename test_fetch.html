@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fetch Test</title>
+</head>
+<body>
+<script type="text/javascript">
+	var url = "http://api.postcodes.io/postcodes/OX495NU";
+	fetch(url)
+	.then(handleResponse)
+	.then(handleJSON)
+	.catch();
+
+function handleResponse(response) {
+	if (response.status === 200 || response.status === 0) {
+		return response.json();
+	}
+}
+
+function handleJSON(json) {
+	console.log(json.result.admin_county);
+}
+</script>
+</body>
+</html>
