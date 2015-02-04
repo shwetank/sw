@@ -18,67 +18,34 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
+	event.respondWith(
+		caches.match(event.request)
+		.then(function(response){
+				if (response) return response;
+				var fetchRequest = event.request.clone();
+				return fetch(fetchRequest)
+				.then(function(response){
+					if(!response || response.status !== 200 || response.type !== 'basic') {
+							return response;
+						}
+						var responseToCache = response.clone();
+
+						caches.open(theCacheName)
+							.then(function(cache) {
+								var cacheRequest = event.request.clone();
+								cache.put(cacheRequest, responseToCache);
+							});
+
+						return response;
+				})
+			})
+	);
+});
+
+/*self.addEventListener('fetch', function(event) {
   event.respondWith(
     fetch(event.request).catch(function() {
       return caches.match(event.request);
     })
   );
-});
-
-/*self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.open('mysite-static-v4').then(function(cache) {
-      return cache.match(event.request).then(function (response) {
-        return response || fetch(event.request.clone()).then(function(response) {
-          cache.put(event.request, response.clone());
-          return response;
-        });
-      });
-    })
-  );
 });*/
-
-/*self.addEventListener ('fetch', function(event){
-	//console.log("fetch request for: "+event.request+"");
-	event.waitUntill(
-		caches.match(event.request)
-		.then(function(response){
-			return response || fetch(event.request);
-		})
-	);
-});*/
-
-
-
-
-/*
-
-self.onfetch = function(event){
-  console.log("fetch request for: "+event.request+"");
-  event.waitUntill(
-    caches.match(event.request)
-    .then(function(response){
-      return response || fetch(event.request);
-    })
-  );
-}
-
-
-
-self.addEventListener('activate', function(event) {
-
-  var cacheWhitelist = ['myCache-V1'];
-
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-});*/
-
